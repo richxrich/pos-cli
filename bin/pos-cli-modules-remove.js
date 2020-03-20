@@ -8,7 +8,7 @@ const program = require('commander'),
 program
   .name('pos-cli modules remove')
   .arguments('[environment]', 'name of the environment. Example: staging')
-  .arguments('<name>', 'name of the module. Example: admin_cms')
+  .arguments('[name]', 'name of the module. Example: admin_cms')
   .action((environment, name) => {
     const authData = fetchAuthData(environment, program);
     const gateway = new Gateway(authData);
@@ -18,9 +18,9 @@ program
       .removeModule(formData)
       .then(data => {
         logger.Debug(`Removing module, server response: ${data}`);
-        logger.Success(`[Module Remove] Successfully removed module ${name}`);
+        logger.Success(`[Modules] Removed ${name} from ${environment}`);
       })
-      .catch(error => logger.Error(`Failed to remove the module ${error}`));
+      .catch(error => logger.Error(`Failed to remove the module.\n${error}`));
   });
 
 program.parse(process.argv);
